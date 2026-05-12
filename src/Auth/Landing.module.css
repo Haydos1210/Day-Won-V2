@@ -1,0 +1,36 @@
+.landingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: #121212;
+    color: #ffffff;
+    gap: 12px;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin: 0 0 8px 0;
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: #aaa;
+    margin: 0 0 32px 0;
+    text-align: center;
+}
+
+.buttonRow {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
