@@ -1,0 +1,30 @@
+.dashboardContainer {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+}
+
+.dashboardNavBar {
+  background-color: rgb(9, 64, 147);
+  width: 100px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.dashboardMainContent {
+  flex: 1;
+  min-height: 100vh;
+}
+
+.mainTitle {
+  display: block;
+  margin: 1.5em;
+  font-weight: 700;
+  color: white;
+}
+
+.mainTitle {
+    font-size: 3em;
+}
