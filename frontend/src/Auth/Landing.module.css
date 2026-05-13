@@ -34,5 +34,59 @@
 }
 
 .landingBodyContainer {
-    
+    display: flex;
+    padding-top: 80px;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.landingPageSloganContainer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}
+
+.landingPageSlogan {
+    font-size: 6rem;
+}
+
+.landingPageInfoBoxesContainer {
+    margin-top: 40px;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    gap: 80px;
+}
+
+.landingPageInfoBox {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 800px;
+    background-color: dodgerblue;
+    margin: 10px;
+    border-radius: 30px;
+}
+
+.landingPageInfoBoxContentContainer {
+    margin-left: 40px;
+    margin-right: 40px;
+} 
+
+.landingPageInfoBoxTitle {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.landingPageInfoBoxBodyText {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.landingPageInfoBoxDividingLine {
+    background-color: white;
+    height: 5px;
+    width: 80%;
 }

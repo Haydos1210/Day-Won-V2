@@ -10,19 +10,47 @@ function Landing() {
         <LandingNavbar/>
         
         <div className={styles.landingBodyContainer}>
-          <h1 className={styles.title}>Presto</h1>
-          <p className={styles.subtitle}>Visualise. Create. Present.</p>
-          <div className={styles.buttonRow}>
-            <Link to='/Login'>
-              <Button variant="contained">Login</Button>
-            </Link>
-            <Link to='/Register'>
-              <Button variant="contained">Register</Button>
-            </Link> 
+          <div className={styles.landingPageSloganContainer}>
+            <h1 className={styles.landingPageSlogan}>One day. Or day one.</h1>
+          </div>
+          <div className={styles.landingPageInfoBoxesContainer}>
+            <div className={styles.landingPageInfoBox}>
+              <div className={styles.landingPageInfoBoxContentContainer}>
+                <p className={styles.landingPageInfoBoxTitle}>Timers</p>
+                <div className={styles.landingPageInfoBoxDividingLine}></div>
+                <p className={styles.landingPageInfoBoxBodyText}>
+                  Keep track of the grind with tracked progress and setting goal targets
+                </p>
+              </div>
+            </div>
+            <div className={styles.landingPageInfoBox}>
+              <div className={styles.landingPageInfoBoxContentContainer}>
+                <p className={styles.landingPageInfoBoxTitle}>Flashcards</p>
+                <div className={styles.landingPageInfoBoxDividingLine}></div>
+                <p className={styles.landingPageInfoBoxBodyText}>
+                  wdwd
+                </p>
+              </div>
+            </div>
+            <div className={styles.landingPageInfoBox}>
+              <div className={styles.landingPageInfoBoxContentContainer}>
+                <p className={styles.landingPageInfoBoxTitle}>Avatar</p>
+                <div className={styles.landingPageInfoBoxDividingLine}></div>
+                <p className={styles.landingPageInfoBoxBodyText}>
+                  wdwd
+                </p>
+              </div>
+            </div>
           </div>
         </div>
+
+        
         
       </div>
+
+      <footer class="footer">
+        <p>© 2026 My Website</p>
+      </footer>
     </>
   );
 }
