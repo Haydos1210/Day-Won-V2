@@ -3,6 +3,7 @@
   min-height: 100vh;
   display: flex;
   align-items: flex-start;
+  background-color: #121212;
 }
 
 .dashboardNavBar {
