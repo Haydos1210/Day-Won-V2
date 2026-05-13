@@ -1,27 +1,40 @@
-import styles from './Navbar.module.css'
-import HomeIcon from '@mui/icons-material/Home';
-import iconStyles from '../auth/EditPresentation.module.css'
-import IconButton from '@mui/material/IconButton';
+import styles from './TopNavbar.module.css'
+// import HomeIcon from '@mui/icons-material/Home';
+// import iconStyles from '../auth/EditPresentation.module.css'
+// import IconButton from '@mui/material/IconButton';
+import DayOneLogo from './DayOneLogo';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 
-function Navbar({onClickHome}) {
+function LandingNavbar() {
   return (
     <nav className={styles.navbar}>
-      <div className={styles.navbarTitleContainer}>
-        <h2 className={styles.navbarTitle} onClick={onClickHome}>
+      <DayOneLogo/>
+      <div className={styles.landingNavAuthContainer}>
+        <Link to='/Login'>
+          <Button variant="contained">Login</Button>
+        </Link>
+        <Link to='/Register'>
+          <Button variant="contained">Register</Button>
+        </Link> 
+      </div>
+      {/* <div className={styles.navbarLogoContainer}>
+        <DayOneLogo/>
+        <h2 className={styles.navbarTitle}>
           Presto
         </h2>
-      </div>
+      </div> */}
 
-      <IconButton
+      {/* <IconButton
         onClick={onClickHome}
         aria-label="Redirects back to dashboard"
         disableRipple
       >
         <HomeIcon className={iconStyles.createElementIcons} fontSize="large"/>
-      </IconButton>
+      </IconButton> */}
     </nav>
   );
 }
 
-export default Navbar
+export default LandingNavbar
