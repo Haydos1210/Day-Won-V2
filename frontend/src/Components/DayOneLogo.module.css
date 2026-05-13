@@ -1,0 +1,35 @@
+.DayOneLogoContainer {
+    display: flex;
+    width: 10%;
+    height: 100%;
+    overflow: hidden;
+    gap: 10px;
+}
+
+.DayOneLogoD {
+    margin: 0;
+    line-height: 1;
+    font-size: 50px;
+}
+
+.DayOneLogoLeftLine {
+    margin-top: 5px;
+    width: 12px;
+    height: 40px;
+    background-color: white;
+    transform: rotate(-15deg);
+    transform-origin: bottom center;
+}
+
+.DayOneLogoRightLine {
+    margin-top: 5px;
+    width: 12px;
+    height: 40px;
+    background-color: white;
+    transform: rotate(15deg);
+    transform-origin: bottom center;
+}
+
+.DayOneLogoW {
+    display: flex;
+}

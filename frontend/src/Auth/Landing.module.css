@@ -1,14 +1,12 @@
 .landingContainer {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: row;
     width: 100%;
     min-height: 100vh;
     flex-direction: column;
     background-color: #121212;
     color: #ffffff;
     gap: 12px;
-    padding: 16px;
     box-sizing: border-box;
 }
 
@@ -33,4 +31,8 @@
     align-items: center;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.landingBodyContainer {
+    
 }
