@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import styles from './Landing.module.css'
 import { Button } from '@mui/material';
 import LandingNavbar from '../Components/LandingNavBar';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 function Landing() {
   return (
@@ -12,6 +13,11 @@ function Landing() {
         <div className={styles.landingBodyContainer}>
           <div className={styles.landingPageSloganContainer}>
             <h1 className={styles.landingPageSlogan}>One day. Or day one.</h1>
+          </div>
+          <div>
+            <Button variant="contained" endIcon={<ArrowForwardIcon />}>
+              Sign up for free
+            </Button>
           </div>
           <div className={styles.landingPageInfoBoxesContainer}>
             <div className={styles.landingPageInfoBox}>
