@@ -1,17 +1,31 @@
 import styles from './Dashboard.module.css'
-import { Button } from '@mui/material';
+import { Button, Box, IconButton } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import TimerIcon from '@mui/icons-material/Timer';
+import DayOneLogo from './DayOneLogo';
 
 function Dashboard() {
   return (
     <>
-      <div className={styles.dashboardContainer}>
-        <div className={styles.dashboardNavBar}>
-            {/* add more nav bar navigatin buttons here */}
-        </div>
-        <div className={styles.dashboardMainContent}>
+      <Box className={styles.dashboardContainer}>
+        <Box className={styles.dashboardNavBar}>
+          <Box className={styles.navItem}>
+            <PersonIcon sx={{ color: 'white', fontSize: 50 }} />
+          </Box>
+
+          <Box className={styles.navItem}>
+            <LibraryBooksIcon sx={{ color: 'white', fontSize: 50 }} />
+          </Box>
+
+          <Box className={styles.navItem}>
+            <TimerIcon sx={{ color: 'white', fontSize: 50 }} />
+          </Box>
+        </Box>
+        <Box className={styles.dashboardMainContent}>
             <span className={styles.mainTitle}>Flash Card Decks</span>
-        </div>
-      </div>
+        </Box>
+      </Box>
     </>
   );
 }
