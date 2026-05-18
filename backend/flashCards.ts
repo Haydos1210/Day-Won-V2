@@ -33,7 +33,7 @@ function getNextCardId(cards: { cardId: number }[]) {
 }
 
 /*
-    Creates a new card inside of a deck, stores card and passes newCard to persistent dataStore
+    Creates a new card inside of a deck, stores card and passes newCard to persistent dataStore.
 */
 router.post('/decks/:deckId/cards', (req: Request, res: Response) => {
     const deckId = Number(req.params.deckId);
@@ -58,7 +58,7 @@ router.post('/decks/:deckId/cards', (req: Request, res: Response) => {
 });
 
 /*
-    Edit a card inside of a deck, stores new card updated fields (if they are defined), and passes updated card to persistent dataStore
+    Edit a card inside of a deck, stores new card updated fields (if they are defined), and passes updated card to persistent dataStore.
 */
 router.put('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
     const deckId = Number(req.params.deckId);
@@ -86,7 +86,7 @@ router.put('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
 });
 
 /*
-    Deletes a card from a deck
+    Deletes a card from a deck.
 */
 router.delete('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
     const deckId = Number(req.params.deckId);
@@ -107,5 +107,21 @@ router.delete('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
     return res.status(200).json({ card: removedCard });
 });
 
+/*
+    Retrieves a card from a deck
+*/
+router.get('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
+    const deckId = Number(req.params.deckId);
+    const cardId = Number(req.params.cardId);
+
+    const data = getData();
+    const deck = data.decks.find(currDeck => currDeck.deckId === deckId);
+    if (!deck) return res.status(404).json({ error: 'Deck not found!' });
+
+    const card = deck.cards.find(currCard => currCard.cardId === cardId); // find Index, not card itself
+    if (!card) return res.status(404).json({ error: 'Card not found!' }); // findIndex can return -1
+
+    return res.status(200).json({ card });
+});
 
 export default router;
