@@ -82,7 +82,7 @@ router.put('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
 
     saveDataToFile(data);
 
-    return res.status(201).json({ card });
+    return res.status(200).json({ card });
 });
 
 /*
