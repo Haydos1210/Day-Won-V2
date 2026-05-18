@@ -85,4 +85,27 @@ router.put('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
     return res.status(201).json({ card });
 });
 
+/*
+    Deletes a card from a deck
+*/
+router.delete('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
+    const deckId = Number(req.params.deckId);
+    const cardId = Number(req.params.cardId);
+
+    const data = getData();
+    const deck = data.decks.find(currDeck => currDeck.deckId === deckId);
+    if (!deck) return res.status(404).json({ error: 'Deck not found!' });
+
+    const card = deck.cards.findIndex(currCard => currCard.cardId === cardId); // find Index, not card itself
+    if (card === -1) return res.status(404).json({ error: 'Card not found!' }); // findIndex can return -1
+
+    const removedCard = deck.cards[card];
+    deck.cards.splice(card, 1); // mutate cards array by removing inplace the card at index 'card'
+
+    saveDataToFile(data);
+
+    return res.status(200).json({ card: removedCard });
+});
+
+
 export default router;
