@@ -41,7 +41,7 @@ const authed = (fn: Function) => async (req: Request, res: Response) => {
 /**
  * Registers a new user by creating a new userId and checking that it is not an existing user through email
  */
-router.post('/register', (req: Request, res, Response) => {
+router.post('/register', (req: Request, res: Response) => {
     const { nameFirst, nameLast, email, password } = req.body;
 
     if (!nameFirst || !nameLast || !email || !password)
