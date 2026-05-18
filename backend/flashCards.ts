@@ -57,4 +57,32 @@ router.post('/decks/:deckId/cards', (req: Request, res: Response) => {
     return res.status(201).json({ card: newCard });
 });
 
+/*
+    Edit a card inside of a deck, stores card and passes newCard to persistent dataStore
+*/
+router.put('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
+    const deckId = Number(req.params.deckId);
+    const cardId = Number(req.params.cardId);
+    const { question, answer } = req.body;
+
+    const data = getData();
+    const deck = data.decks.find(currDeck => currDeck.deckId === deckId);
+    if (!deck) return res.status(404).json({ error: 'Deck not found!' });
+
+    const card = deck.cards.find(currCard => currCard.cardId === cardId);
+    if (!card) return res.status(404).json({ error: 'Card not found!' });
+
+    if (question !== undefined) {
+        card.question = question;
+    }
+
+    if (answer !== undefined) {
+        card.answer = answer;
+    }
+
+    saveDataToFile(data);
+
+    return res.status(201).json({ card });
+});
+
 export default router;
