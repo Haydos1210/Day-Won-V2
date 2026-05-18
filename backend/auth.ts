@@ -97,7 +97,7 @@ router.post('/login', (req: Request, res: Response) => {
  */         
 router.get('/me', authed(async (req: Request, res: Response) => {
     const user = (req as any).user;
-    res.json({ nameFirst: user.nameFirst });
+    res.json({ userId: user.userId, nameFirst: user.nameFirst });
 }));
 
 /**
