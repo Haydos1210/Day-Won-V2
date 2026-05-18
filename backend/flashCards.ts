@@ -58,7 +58,7 @@ router.post('/decks/:deckId/cards', (req: Request, res: Response) => {
 });
 
 /*
-    Edit a card inside of a deck, stores card and passes newCard to persistent dataStore
+    Edit a card inside of a deck, stores new card updated fields (if they are defined), and passes updated card to persistent dataStore
 */
 router.put('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
     const deckId = Number(req.params.deckId);
