@@ -5,8 +5,6 @@ import { getData, saveDataToFile } from './dataStore';
 
 const router = Router();
 
-const token = randomUUID();
-
 /**
  * Finds the next available unique id for a user using simple arithmetic with the list of users
  */
@@ -35,6 +33,10 @@ const authed = (fn: Function) => async (req: Request, res: Response) => {
 
     if (!session) return res.status(401).json({ error: 'Unauthorised!' });
 
+    // Attach the session ({ nameFirst, userId }) onto req so downstream route handlers
+    // can access who is making the request via (req as any).user without re-querying the data store.
+    // 'as any' is to escape TypeScript since Express's Request type has no built-in .user field.
+    (req as any).user = session;
     return fn(req, res);
 }
 
@@ -84,6 +86,19 @@ router.post('/login', (req: Request, res: Response) => {
 
     return res.status(200).json({ token });
 });
+
+/**
+ * Returns the currently authenticated user's session data (nameFirst and userId).
+ *  Use cases:
+ *      - Verifies a stored token is still valid when the app loads (i.e. "am I still logged in?").
+ *      - Retrieves the logged-in user's info for the frontend (e.g. displaying their name in the UI).
+ *      - Acts as a quick sanity-check during development to confirm the auth flow is working.
+ *      - Useful for displaying information for the user in their profile page.
+ */         
+router.get('/me', authed(async (req: Request, res: Response) => {
+    const user = (req as any).user;
+    res.json({ nameFirst: user.nameFirst });
+}));
 
 /**
  * Logs out the user by deleting the token.
