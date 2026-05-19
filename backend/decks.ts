@@ -89,3 +89,5 @@ router.get('/decks/:deckId', authed(async (req: Request, res: Response) => {
 
     return res.status(200).json({ deck });
 }));
+
+export default router;

@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { loadDataFile } from './dataStore';
 import flashCardsRouter from './flashCards';
+import decksRouter from './decks';
 
 loadDataFile();
 const app = express();
@@ -10,6 +11,7 @@ const port = 5500;
 app.use(cors());
 app.use(express.json());
 app.use('/', flashCardsRouter);
+app.use('/', decksRouter);
 
 app.get("/", (req, res) => {
   res.send("Backend is running"); // For Debug purposes
