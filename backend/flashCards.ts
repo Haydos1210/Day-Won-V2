@@ -18,6 +18,7 @@ import express from 'express';
 import cors from 'cors';
 import { Router, Request, Response } from 'express';
 import { getData, saveDataToFile } from './dataStore.ts';
+import { authed } from './auth.ts';
 
 const router = Router();
 
@@ -35,7 +36,7 @@ function getNextCardId(cards: { cardId: number }[]) {
 /*
     Creates a new card inside of a deck, stores card and passes newCard to persistent dataStore.
 */
-router.post('/decks/:deckId/cards', (req: Request, res: Response) => {
+router.post('/decks/:deckId/cards', authed(async (req: Request, res: Response) => {
     const deckId = Number(req.params.deckId);
     const { question, answer } = req.body;
 
@@ -55,12 +56,12 @@ router.post('/decks/:deckId/cards', (req: Request, res: Response) => {
     saveDataToFile(data);
 
     return res.status(201).json({ card: newCard });
-});
+}));
 
 /*
     Edit a card inside of a deck, stores new card updated fields (if they are defined), and passes updated card to persistent dataStore.
 */
-router.put('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
+router.put('/decks/:deckId/cards/:cardId', authed(async (req: Request, res: Response) => {
     const deckId = Number(req.params.deckId);
     const cardId = Number(req.params.cardId);
     const { question, answer } = req.body;
@@ -83,12 +84,12 @@ router.put('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
     saveDataToFile(data);
 
     return res.status(200).json({ card });
-});
+}));
 
 /*
     Deletes a card from a deck.
 */
-router.delete('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
+router.delete('/decks/:deckId/cards/:cardId', authed( async (req: Request, res: Response) => {
     const deckId = Number(req.params.deckId);
     const cardId = Number(req.params.cardId);
 
@@ -105,12 +106,12 @@ router.delete('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
     saveDataToFile(data);
 
     return res.status(200).json({ card: removedCard });
-});
+}));
 
 /*
     Retrieves a card from a deck
 */
-router.get('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
+router.get('/decks/:deckId/cards/:cardId', authed(async (req: Request, res: Response) => {
     const deckId = Number(req.params.deckId);
     const cardId = Number(req.params.cardId);
 
@@ -122,6 +123,6 @@ router.get('/decks/:deckId/cards/:cardId', (req: Request, res: Response) => {
     if (!card) return res.status(404).json({ error: 'Card not found!' }); // findIndex can return -1
 
     return res.status(200).json({ card });
-});
+}));
 
 export default router;

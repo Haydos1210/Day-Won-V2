@@ -4,7 +4,8 @@ import { Data } from './dataInterface.ts';
 
 let data: Data = {
     users: [],
-    decks: []
+    decks: [],
+    sessions: {}
 };
 
 // Use getData() to access the data
@@ -34,7 +35,8 @@ function loadDataFile() {
     const newData = JSON.parse(loadedData);
     data = {
         users: newData.users,
-        decks: newData.decks
+        decks: newData.decks,
+        sessions: newData.sessions
     };
     return data;
 }

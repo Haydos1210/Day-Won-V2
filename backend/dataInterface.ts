@@ -6,8 +6,12 @@ interface User {
     password: string,
     numSuccessfulLogins: number,
     numFailedPasswordsSinceLastLogin: number
-    // userSession: string[];
     passwordHistory: string[];
+}
+
+interface Session {
+    nameFirst: string,
+    userId: number
 }
 
 interface Deck {
@@ -18,7 +22,7 @@ interface Deck {
 
 interface Card {
     question: string,
-    answer:string,
+    answer: string,
     cardId: number
 }
 
@@ -44,10 +48,13 @@ interface Card {
 
 interface Data {
     users: User[],
-    decks: Deck[]
+    decks: Deck[],
+    // Record<string, Session> means: "an object where every key is a string (the UUID token) and every value is a Session.
+    sessions: Record<string, Session>
 }
 
 export {
     Data,
     User,
+    Session
 };
