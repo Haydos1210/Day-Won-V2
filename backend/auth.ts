@@ -24,7 +24,7 @@ function getNextUserId(users: { userId: number }[]): number {
  *      - checks data.sessions[token]
  *      - if valid runs function otherwise, return 401 and the function requested never runs.
  */
-const authed = (fn: Function) => async (req: Request, res: Response) => {
+export const authed = (fn: Function) => async (req: Request, res: Response) => {
     const header = req.headers['authorization'] ?? '';
     const token = header.replace('Bearer ', '').trim();
 
