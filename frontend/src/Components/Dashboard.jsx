@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './Dashboard.module.css'
 import { useNavigate } from 'react-router-dom';
-import { Button, Box, IconButton } from '@mui/material';
+import { Button, Box, IconButton, CircularProgress, Alert } from '@mui/material';
 import DeckCard from './DeckCard';
 import DayOneLogo from './DayOneLogo';
 import PersonIcon from '@mui/icons-material/Person';
@@ -100,6 +100,15 @@ function Dashboard() {
                 Create Deck
               </Button>
             </div>
+
+            {error && (
+                <Alert
+                severity="error"
+                onClose={() => setError('')}
+                >
+                    {error}
+                </Alert>
+            )}
 
             <div className={styles.deckGrid}>
               {decks.map((deck) => (
