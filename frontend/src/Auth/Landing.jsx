@@ -54,7 +54,7 @@ function Landing() {
         
       </div>
 
-      <footer class="footer">
+      <footer className="footer">
         <p>© 2026 My Website</p>
       </footer>
     </>
