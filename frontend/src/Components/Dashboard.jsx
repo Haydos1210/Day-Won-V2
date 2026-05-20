@@ -10,31 +10,57 @@ import TimerIcon from '@mui/icons-material/Timer';
 import Profile from './Profile';
 
 function Dashboard() {
+  const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const [decks, setDecks] = useState([]);
-  const token = localStorage.getItem('token');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const loadDecks = async () => {
-      if (!token) return;
+      if (!token) {
+        navigate('/Login');
+        return;
+      }
 
-      const res = await fetch('http://localhost:5500/decks', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      setLoading(true);
+      setError('');
 
-      if (!res.ok) return;
+      try {
+        const res = await fetch('http://localhost:5500/decks', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      const data = await res.json();
-      setDecks(data.decks || []);
+        if (res.status === 401) {
+          localStorage.removeItem('token');
+          navigate('/Login');
+          return;
+        }
+
+        if (!res.ok) {
+          setError('Error: failed to load decks!');
+          return;
+        }
+
+        const data = await res.json();
+        setDecks(data.decks || []);
+      } catch {
+        setError('Error: network error');
+      } finally {
+        setLoading(false);
+      }
     };
 
     loadDecks();
-  }, [token]);
+  }, [token, navigate]);
 
   const handleCreateDeck = async () => {
     if (!token) return;
+
+    const name = prompt('Name:') || '';
+    const desc = prompt('Description:') || '';
 
     const res = await fetch('http://localhost:5500/decks', {
       method: 'POST',
@@ -42,6 +68,7 @@ function Dashboard() {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ name, desc }),
     });
 
     if (!res.ok) return;
