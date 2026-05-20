@@ -7,6 +7,7 @@ import Dashboard from './Components/Dashboard'
 import Register from './Auth/Register'
 import Login from './Auth/Login'
 import Profile from './Components/Profile'
+import Deck from './Components/Deck'
 
 function App() {
 
