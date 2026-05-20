@@ -80,7 +80,7 @@ router.put('/decks/:deckId', authed(async (req: Request, res: Response) => {
     if (!isDeckOwner(req, res, deck)) return;
 
     if (name !== undefined) deck.name = name;
-    if (desc !== undefined) deck.deck = deck;
+    if (desc !== undefined) deck.desc = desc;
 
     saveDataToFile(data);
 
@@ -95,8 +95,8 @@ router.delete('/decks/:deckId', authed( async (req: Request, res: Response) => {
 
     const data = getData();
     const deckIndex = data.decks.findIndex(currDeck => currDeck.deckId === deckId);
+    const deck = data.decks[deckIndex];
     if (deckIndex === -1) return res.status(404).json({ error: 'Deck not found!' });
-    
     if (!isDeckOwner(req, res, deck)) return;
 
     const removedDeck = data.decks[deckIndex];
