@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { Data } from './dataInterface.ts';
+import type { Data } from './dataInterface.ts';
 
 let data: Data = {
     users: [],
