@@ -17,7 +17,8 @@ function DeckCard({ deck }) {
       </div>
 
       <div className={styles.content}>
-        <strong className={styles.title}>Deck {deck.deckId}</strong>
+        <strong className={styles.title}>Deck {deck.name}</strong>
+        <p className={styles.desc}>{deck.desc}</p>
         <span className={styles.meta}>{deck.cards.length} card(s)</span>
       </div>
     </div>

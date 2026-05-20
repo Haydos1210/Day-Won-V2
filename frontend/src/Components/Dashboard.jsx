@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import styles from './Dashboard.module.css'
 import { useNavigate } from 'react-router-dom';
 import { Button, Box, IconButton } from '@mui/material';
+import DeckCard from './DeckCard';
+import DayOneLogo from './DayOneLogo';
 import PersonIcon from '@mui/icons-material/Person';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import TimerIcon from '@mui/icons-material/Timer';
-import DayOneLogo from './DayOneLogo';
 import Profile from './Profile';
 
 function Dashboard() {
