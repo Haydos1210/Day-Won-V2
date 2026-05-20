@@ -34,10 +34,15 @@ function getNextDeckId(decks: { deckId: number }[]) {
     Creates a new deck, stores it and passes newdeck to persistent dataStore.
 */
 router.post('/decks', authed(async (req: Request, res: Response) => {
+    const { name, desc } = req.body;
     const data = getData();
+    const user = (req as any).user;
 
     const newDeck = {
+        ownerId: user.userId,
         deckId: getNextDeckId(data.decks),
+        name: name || `Deck ${data.decks.length + 1}`, // either a given name or the default being 'Deck No.'
+        desc: desc || '', // either a given description or blank by default
         cards: []
     };
 
@@ -89,5 +94,16 @@ router.get('/decks/:deckId', authed(async (req: Request, res: Response) => {
 
     return res.status(200).json({ deck });
 }));
+
+/*
+    Retrieves ALL decks. Used for the dashboard display
+*/
+router.get('/decks', authed(async (req: Request, res: Response) => {
+    const data = getData();
+    const user = (req as any).user;
+    const decks = data.decks.filter(d => d.ownerId === user.userId);
+    return res.status(200).json({ decks });
+}));
+
 
 export default router;
