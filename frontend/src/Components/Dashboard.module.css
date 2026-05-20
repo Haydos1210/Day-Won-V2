@@ -48,3 +48,10 @@
 .logoutButton {
   align-self: center;
 }
+
+.deckGrid {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
