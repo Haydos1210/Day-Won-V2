@@ -13,13 +13,13 @@ function DeckCard({ deck }) {
       style={{ cursor: 'pointer' }}
     >
       <div className={styles.thumbnail}>
-        <span className={styles.count}>{deck.cards.length}</span>
+        <span className={styles.count}>{deck.cards?.length ?? 0}</span>
       </div>
 
       <div className={styles.content}>
         <strong className={styles.title}>{deck.name}</strong>
         <p className={styles.desc}>{deck.desc}</p>
-        <span className={styles.meta}>{deck.cards.length} card(s)</span>
+        <span className={styles.meta}>{deck.cards?.length ?? 0} card(s)</span>
       </div>
     </div>
   );
