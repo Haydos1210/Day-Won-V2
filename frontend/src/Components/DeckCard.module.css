@@ -1,0 +1,42 @@
+.card {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.thumbnail {
+  flex: 0 0 55%;
+  background: dodgerblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.count {
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.content {
+  flex: 1;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #222;
+}
+
+.title {
+  font-size: 14px;
+}
+
+.meta {
+  font-size: 11px;
+  color: #555;
+}
