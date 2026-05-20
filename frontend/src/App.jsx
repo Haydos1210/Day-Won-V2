@@ -21,19 +21,11 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<Landing />}/>
-        {/* <Route path='/Login' element={<Login successCallback={authenticate} />}/>
-        <Route path='/Register' element={<Register successCallback={authenticate} />}/> */}
-        <Route path='/Dashboard' element={<Dashboard />}/>
-        {/* <Route path='/presentation/:id' element={<EditPresentation token={token} />}/>
-        <Route path='/presentation/:id/preview' element={<PreviewPresentation token={token} />}/> */}
         <Route path='/Login' element={<Login successCallback={authenticate} />}/>
         <Route path='/Register' element={<Register successCallback={authenticate} />}/> 
+        <Route path='/Dashboard' element={<Dashboard />}/>
         <Route path='/Profile' element={<Profile/>}/> 
-        {/*
-          <Route path='/Dashboard' element={<Dashboard token={token} logOut={logOut} onClickHome={() => navigate('/')}/>}/>
-          <Route path='/presentation/:id' element={<EditPresentation token={token} />}/>
-          <Route path='/presentation/:id/preview' element={<PreviewPresentation token={token} />}/>
-        */}
+        <Route path='/decks/:deckId' element={<Deck />} />
       </Routes>
 
     </>
