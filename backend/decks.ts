@@ -67,16 +67,25 @@ router.post('/decks', authed(async (req: Request, res: Response) => {
 
 /*
     Edit a deck, stores new deck updated fields (if they are defined), and passes updated deck to persistent dataStore.
-    currently not implemented as deck does not have fields to update
+    Note that this route does NOT handle cards. it handles editing deck name and description
+    Editing/Deleting cards is under the cards routes and is not considered 'editing the deck'
 */
-// router.put('/decks/:deckId', authed(async (req: Request, res: Response) => {
+router.put('/decks/:deckId', authed(async (req: Request, res: Response) => {
+    const deckId = Number(req.params.deckId);
+    const { name, desc } = req.body;
+    const data = getData();
     
+    const deck = data.decks.find(currDeck => currDeck.deckId === deckId);
+    if (!deck) return res.status(404).json({ error: 'Deck not found!' });
+    if (!isDeckOwner(req, res, deck)) return;
 
-//     saveDataToFile(data);
-//     if (!isDeckOwner(req, res, deck)) return;
+    if (name !== undefined) deck.name = name;
+    if (desc !== undefined) deck.deck = deck;
 
-//     return res.status(200).json({ deck });
-// }));
+    saveDataToFile(data);
+
+    return res.status(200).json({ deck });
+}));
 
 /*
     Deletes a deck
