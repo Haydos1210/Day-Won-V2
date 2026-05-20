@@ -5,6 +5,7 @@ import flashCardsRouter from './flashCards.ts';
 import decksRouter from './decks.ts';
 import authRouter from './auth.ts';
 
+
 loadDataFile();
 const app = express();
 const port = 5500;
