@@ -14,9 +14,8 @@
     // 403 - forbidden (valid token, but lack permission for this task)
     // 404 - not found
 
-import express from 'express';
-import cors from 'cors';
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
+import type { Request, Response } from 'express';
 import { getData, saveDataToFile } from './dataStore.ts';
 import { authed } from './auth.ts';
 

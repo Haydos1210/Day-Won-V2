@@ -1,9 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import { loadDataFile } from './dataStore';
-import flashCardsRouter from './flashCards';
-import decksRouter from './decks';
-import authRouter from './auth';
+import { loadDataFile } from './dataStore.ts';
+import flashCardsRouter from './flashCards.ts';
+import decksRouter from './decks.ts';
+import authRouter from './auth.ts';
+
 
 loadDataFile();
 const app = express();
