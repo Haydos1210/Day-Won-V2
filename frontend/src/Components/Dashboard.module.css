@@ -29,15 +29,22 @@
 .dashboardMainContent {
   flex: 1;
   min-height: 100vh;
+  padding: 1.5em;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .mainTitle {
-  display: block;
-  margin: 1.5em;
+  font-size: 3em;
   font-weight: 700;
   color: white;
+  margin: 0;
 }
 
-.mainTitle {
-    font-size: 3em;
+.logoutButton {
+  align-self: center;
 }

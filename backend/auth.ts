@@ -66,7 +66,7 @@ router.post('/register', (req: Request, res: Response) => {
 
     saveDataToFile(data);
 
-    return res.status(200).json({ message: 'Registered successfully' });
+    return res.status(201).json({ message: 'Registered successfully' });
 })
 
 /**
@@ -78,7 +78,10 @@ router.post('/login', (req: Request, res: Response) => {
 
     const data = getData();
     const user = data.users.find((u) => u.email === email && u.password === password);
-    if (!user) return res.status(401).json({ error: 'Invalid credentials!' });
+
+    if (!user) {
+        return res.status(401).json({ error: 'Invalid credentials!' });
+    }
 
     const token = randomUUID();
     data.sessions[token] = { nameFirst: user.nameFirst, userId: user.userId };

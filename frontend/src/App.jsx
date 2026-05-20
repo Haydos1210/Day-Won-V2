@@ -6,6 +6,7 @@ import Landing from './Auth/Landing'
 import Dashboard from './Components/Dashboard'
 import Register from './Auth/Register'
 import Login from './Auth/Login'
+import Profile from './Components/Profile'
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         <Route path='/presentation/:id/preview' element={<PreviewPresentation token={token} />}/> */}
         <Route path='/Login' element={<Login successCallback={authenticate} />}/>
         <Route path='/Register' element={<Register successCallback={authenticate} />}/> 
+        <Route path='/Profile' element={<Profile/>}/> 
         {/*
           <Route path='/Dashboard' element={<Dashboard token={token} logOut={logOut} onClickHome={() => navigate('/')}/>}/>
           <Route path='/presentation/:id' element={<EditPresentation token={token} />}/>

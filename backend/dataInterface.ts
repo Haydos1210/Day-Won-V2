@@ -53,7 +53,7 @@ interface Data {
     sessions: Record<string, Session>
 }
 
-export {
+export type {
     Data,
     User,
     Session

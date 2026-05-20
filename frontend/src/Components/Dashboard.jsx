@@ -1,17 +1,21 @@
 import styles from './Dashboard.module.css'
+import { useNavigate } from 'react-router-dom';
 import { Button, Box, IconButton } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import TimerIcon from '@mui/icons-material/Timer';
 import DayOneLogo from './DayOneLogo';
+import Profile from './Profile';
 
 function Dashboard() {
+  const navigate = useNavigate();
+
   return (
     <>
       <Box className={styles.dashboardContainer}>
         <Box className={styles.dashboardNavBar}>
-          <Box className={styles.navItem}>
-            <PersonIcon sx={{ color: 'white', fontSize: 50 }} />
+          <Box className={styles.navItem} onClick={() => navigate('/Profile')}>
+            <PersonIcon sx={{ color: 'white', fontSize: 50 }}/>
           </Box>
 
           <Box className={styles.navItem}>
