@@ -34,6 +34,19 @@ function getNextCardId(cards: { cardId: number }[]) {
 }
 
 /*
+    Identifies if the person trying to access or perform an operation on a deck is an owner.
+*/
+function isDeckOwner(req: Request, res:Response, deck: { ownerId: number }) {
+    const user = (req as any).user;
+    if (deck.ownerId !== user.userId) {
+        res.status(403).json({ error: "You do not own this deck!" });
+        return false;
+    } else {
+        return true;
+    }
+}
+
+/*
     Creates a new card inside of a deck, stores card and passes newCard to persistent dataStore.
 */
 router.post('/decks/:deckId/cards', authed(async (req: Request, res: Response) => {
@@ -45,6 +58,7 @@ router.post('/decks/:deckId/cards', authed(async (req: Request, res: Response) =
     const data = getData();
     const deck = data.decks.find(currDeck => currDeck.deckId === deckId);
     if (!deck) return res.status(404).json({ error: 'Deck not found!' });
+    if (!isDeckOwner(req, res, deck)) return;
 
     const newCard = {
         cardId: getNextCardId(deck.cards),
@@ -69,6 +83,7 @@ router.put('/decks/:deckId/cards/:cardId', authed(async (req: Request, res: Resp
     const data = getData();
     const deck = data.decks.find(currDeck => currDeck.deckId === deckId);
     if (!deck) return res.status(404).json({ error: 'Deck not found!' });
+    if (!isDeckOwner(req, res, deck)) return;
 
     const card = deck.cards.find(currCard => currCard.cardId === cardId);
     if (!card) return res.status(404).json({ error: 'Card not found!' });
@@ -96,6 +111,7 @@ router.delete('/decks/:deckId/cards/:cardId', authed( async (req: Request, res: 
     const data = getData();
     const deck = data.decks.find(currDeck => currDeck.deckId === deckId);
     if (!deck) return res.status(404).json({ error: 'Deck not found!' });
+    if (!isDeckOwner(req, res, deck)) return;
 
     const card = deck.cards.findIndex(currCard => currCard.cardId === cardId); // find Index, not card itself
     if (card === -1) return res.status(404).json({ error: 'Card not found!' }); // findIndex can return -1
@@ -118,6 +134,7 @@ router.get('/decks/:deckId/cards/:cardId', authed(async (req: Request, res: Resp
     const data = getData();
     const deck = data.decks.find(currDeck => currDeck.deckId === deckId);
     if (!deck) return res.status(404).json({ error: 'Deck not found!' });
+    if (!isDeckOwner(req, res, deck)) return;
 
     const card = deck.cards.find(currCard => currCard.cardId === cardId); // find Index, not card itself
     if (!card) return res.status(404).json({ error: 'Card not found!' }); // findIndex can return -1

@@ -31,6 +31,19 @@ function getNextDeckId(decks: { deckId: number }[]) {
 }
 
 /*
+    Identifies if the person trying to access or perform an operation on a deck is an owner.
+*/
+function isDeckOwner(req: Request, res:Response, deck: { ownerId: number }) {
+    const user = (req as any).user;
+    if (deck.ownerId !== user.userId) {
+        res.status(403).json({ error: "You do not own this deck!" });
+        return false;
+    } else {
+        return true;
+    }
+}
+
+/*
     Creates a new deck, stores it and passes newdeck to persistent dataStore.
 */
 router.post('/decks', authed(async (req: Request, res: Response) => {
@@ -56,10 +69,11 @@ router.post('/decks', authed(async (req: Request, res: Response) => {
     Edit a deck, stores new deck updated fields (if they are defined), and passes updated deck to persistent dataStore.
     currently not implemented as deck does not have fields to update
 */
-// router.put('/decks/:deckId/decks/:deckId', authed(async (req: Request, res: Response) => {
+// router.put('/decks/:deckId', authed(async (req: Request, res: Response) => {
     
 
 //     saveDataToFile(data);
+//     if (!isDeckOwner(req, res, deck)) return;
 
 //     return res.status(200).json({ deck });
 // }));
@@ -73,6 +87,8 @@ router.delete('/decks/:deckId', authed( async (req: Request, res: Response) => {
     const data = getData();
     const deckIndex = data.decks.findIndex(currDeck => currDeck.deckId === deckId);
     if (deckIndex === -1) return res.status(404).json({ error: 'Deck not found!' });
+    
+    if (!isDeckOwner(req, res, deck)) return;
 
     const removedDeck = data.decks[deckIndex];
     data.decks.splice(deckIndex, 1); // mutate decks array by removing inplace the deck at index 'deck'
@@ -91,6 +107,7 @@ router.get('/decks/:deckId', authed(async (req: Request, res: Response) => {
     const data = getData();
     const deck = data.decks.find(currDeck => currDeck.deckId === deckId);
     if (!deck) return res.status(404).json({ error: 'Deck not found!' });
+    if (!isDeckOwner(req, res, deck)) return;
 
     return res.status(200).json({ deck });
 }));
@@ -101,7 +118,7 @@ router.get('/decks/:deckId', authed(async (req: Request, res: Response) => {
 router.get('/decks', authed(async (req: Request, res: Response) => {
     const data = getData();
     const user = (req as any).user;
-    const decks = data.decks.filter(d => d.ownerId === user.userId);
+    const decks = data.decks.filter(owner => owner.ownerId === user.userId);
     return res.status(200).json({ decks });
 }));
 
