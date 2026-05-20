@@ -9,8 +9,7 @@ import {
 } from '@mui/material';
 import styles from './Login.module.css'
 import { useState } from 'react';
-
-
+import axios from 'axios';
 
 function Login({ successCallback }) {
     const [email, setEmail] = useState('');
@@ -31,7 +30,16 @@ function Login({ successCallback }) {
         }
 
         setLoading(true);
+
         try {
+            const res = await axios.post('http://localhost:5500/login', {
+                email,
+                password,
+            });
+
+            const token = res.data.token;
+            localStorage.setItem('token', token);
+
             if (successCallback) successCallback();
         } catch (err) {
             setError("Error: login failed");
