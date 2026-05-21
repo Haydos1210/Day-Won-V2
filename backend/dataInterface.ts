@@ -15,8 +15,11 @@ interface Session {
 }
 
 interface Deck {
-    cards: Card[],
-    deckId: number
+    ownerId: number,
+    deckId: number,
+    name: string,
+    desc: string,
+    cards: Card[]
 }
 
 
