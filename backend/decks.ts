@@ -30,13 +30,31 @@ function getNextDeckId(decks: { deckId: number }[]) {
 }
 
 /*
+    Identifies if the person trying to access or perform an operation on a deck is an owner.
+*/
+function isDeckOwner(req: Request, res:Response, deck: { ownerId: number }) {
+    const user = (req as any).user;
+    if (deck.ownerId !== user.userId) {
+        res.status(403).json({ error: "You do not own this deck!" });
+        return false;
+    } else {
+        return true;
+    }
+}
+
+/*
     Creates a new deck, stores it and passes newdeck to persistent dataStore.
 */
 router.post('/decks', authed(async (req: Request, res: Response) => {
+    const { name, desc } = req.body;
     const data = getData();
+    const user = (req as any).user;
 
     const newDeck = {
+        ownerId: user.userId,
         deckId: getNextDeckId(data.decks),
+        name: name || `Deck ${data.decks.length + 1}`, // either a given name or the default being 'Deck No.'
+        desc: desc || '', // either a given description or blank by default
         cards: []
     };
 
@@ -48,15 +66,25 @@ router.post('/decks', authed(async (req: Request, res: Response) => {
 
 /*
     Edit a deck, stores new deck updated fields (if they are defined), and passes updated deck to persistent dataStore.
-    currently not implemented as deck does not have fields to update
+    Note that this route does NOT handle cards. it handles editing deck name and description
+    Editing/Deleting cards is under the cards routes and is not considered 'editing the deck'
 */
-// router.put('/decks/:deckId/decks/:deckId', authed(async (req: Request, res: Response) => {
+router.put('/decks/:deckId', authed(async (req: Request, res: Response) => {
+    const deckId = Number(req.params.deckId);
+    const { name, desc } = req.body;
+    const data = getData();
     
+    const deck = data.decks.find(currDeck => currDeck.deckId === deckId);
+    if (!deck) return res.status(404).json({ error: 'Deck not found!' });
+    if (!isDeckOwner(req, res, deck)) return;
 
-//     saveDataToFile(data);
+    if (name !== undefined) deck.name = name;
+    if (desc !== undefined) deck.desc = desc;
 
-//     return res.status(200).json({ deck });
-// }));
+    saveDataToFile(data);
+
+    return res.status(200).json({ deck });
+}));
 
 /*
     Deletes a deck
@@ -66,7 +94,9 @@ router.delete('/decks/:deckId', authed( async (req: Request, res: Response) => {
 
     const data = getData();
     const deckIndex = data.decks.findIndex(currDeck => currDeck.deckId === deckId);
+    const deck = data.decks[deckIndex];
     if (deckIndex === -1) return res.status(404).json({ error: 'Deck not found!' });
+    if (!isDeckOwner(req, res, deck)) return;
 
     const removedDeck = data.decks[deckIndex];
     data.decks.splice(deckIndex, 1); // mutate decks array by removing inplace the deck at index 'deck'
@@ -85,8 +115,20 @@ router.get('/decks/:deckId', authed(async (req: Request, res: Response) => {
     const data = getData();
     const deck = data.decks.find(currDeck => currDeck.deckId === deckId);
     if (!deck) return res.status(404).json({ error: 'Deck not found!' });
+    if (!isDeckOwner(req, res, deck)) return;
 
     return res.status(200).json({ deck });
 }));
+
+/*
+    Retrieves ALL decks. Used for the dashboard display
+*/
+router.get('/decks', authed(async (req: Request, res: Response) => {
+    const data = getData();
+    const user = (req as any).user;
+    const decks = data.decks.filter(owner => owner.ownerId === user.userId);
+    return res.status(200).json({ decks });
+}));
+
 
 export default router;
