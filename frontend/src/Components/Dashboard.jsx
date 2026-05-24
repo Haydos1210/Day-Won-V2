@@ -87,6 +87,12 @@ function Dashboard() {
     setCreatingDeck(false);
   };
 
+  const handleCancel = async () => {
+    setCreatingDeck(false);
+    setDeckName('');
+    setDeckDesc('');
+  }
+
   return (
     <>
       <Box className={styles.dashboardContainer}>
@@ -133,14 +139,20 @@ function Dashboard() {
         </Box>
       </Box>
 
-      <Dialog open={creatingDeck} onClose={() => setCreatingDeck(false)} color='black' fullWidth>
-        <DialogTitle>Create Deck</DialogTitle>
+      <Dialog open={creatingDeck} onClose={() => setCreatingDeck(false)} slotProps={{ paper: { sx: { backgroundColor: '#121212', color: 'white' } } }} fullWidth>
+        <DialogTitle sx={{ color: 'white', borderBottom: '1px solid #1a1a1a' }}>Create Deck</DialogTitle>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <TextField label="Deck Name" value={deckName} onChange={(e) => setDeckName(e.target.value)} />
-          <TextField label="Description" value={deckDesc} onChange={(e) => setDeckDesc(e.target.value)} multiline minRows={2} />
+          <TextField label="Deck Name" value={deckName} onChange={(e) => setDeckName(e.target.value)} InputLabelProps={{ style: { color: "white" } }}
+  sx={{
+    input: { color: "white" },
+  }} />
+          <TextField label="Description" value={deckDesc} onChange={(e) => setDeckDesc(e.target.value)} multiline minRows={2} InputLabelProps={{ style: { color: "white" } }}
+  sx={{
+    input: { color: "white" },
+  }} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setCreatingDeck(false)}>Cancel</Button>
+          <Button onClick={handleCancel}>Cancel</Button>
           <Button variant="contained" onClick={handleCreateDeck}>Save Deck</Button>
         </DialogActions>
       </Dialog>
