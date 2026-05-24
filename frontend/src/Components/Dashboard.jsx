@@ -144,11 +144,15 @@ function Dashboard() {
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <TextField label="Deck Name" value={deckName} onChange={(e) => setDeckName(e.target.value)} InputLabelProps={{ style: { color: "white" } }}
   sx={{
-    input: { color: "white" },
+    "& .MuiInputBase-input": {
+      color: "white",
+    },
   }} />
           <TextField label="Description" value={deckDesc} onChange={(e) => setDeckDesc(e.target.value)} multiline minRows={2} InputLabelProps={{ style: { color: "white" } }}
   sx={{
-    input: { color: "white" },
+    "& .MuiInputBase-input": {
+      color: "white",
+    },
   }} />
         </DialogContent>
         <DialogActions>
