@@ -55,3 +55,29 @@
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
 }
+
+.addDeckCard {
+  min-height: 240px;
+  border: 1px dashed #5a5a5a;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.addDeckCard:hover {
+  border-color: dodgerblue;
+  background: #1a1a1a;
+}
+
+.addDeckIcon {
+  font-size: 3rem;
+  color: dodgerblue;
+}
+
+.addDeckText {
+  color: #cfcfcf;
+  font-style: italic; 
+}

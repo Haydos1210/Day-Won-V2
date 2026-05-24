@@ -114,6 +114,11 @@ function Dashboard() {
               {[...decks].slice().reverse().map((deck) => (
                 <DeckCard key={deck.deckId} deck={deck} />
               ))}
+
+              <div className={styles.addDeckCard} onClick={handleCreateDeck} role="button" tabIndex={0}>
+                <div className={styles.addDeckIcon}>+</div>
+                <div className={styles.addDeckText}>Add Deck</div>
+              </div>
             </div>
         </Box>
       </Box>
