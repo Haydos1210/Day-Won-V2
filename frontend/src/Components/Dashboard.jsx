@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './Dashboard.module.css'
 import { useNavigate } from 'react-router-dom';
-import { Button, Box, IconButton, CircularProgress, Alert } from '@mui/material';
+import { Button, Box, IconButton, CircularProgress, Alert, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import DeckCard from './DeckCard';
 import DayOneLogo from './DayOneLogo';
 import PersonIcon from '@mui/icons-material/Person';
@@ -15,6 +15,9 @@ function Dashboard() {
   const [decks, setDecks] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [creatingDeck, setCreatingDeck] = useState(false);
+  const [deckName, setDeckName] = useState('');
+  const [deckDesc, setDeckDesc] = useState('');
   
   useEffect(() => {
     const loadDecks = async () => {
@@ -57,10 +60,11 @@ function Dashboard() {
   }, [navigate]);
 
   const handleCreateDeck = async () => {
+    const token = localStorage.getItem('token');
     if (!token) return;
 
-    const name = prompt('Name:') || '';
-    const desc = prompt('Description:') || '';
+    // const name = prompt('Name:') || '';
+    // const desc = prompt('Description:') || '';
 
     const res = await fetch('http://localhost:5500/decks', {
       method: 'POST',
@@ -68,13 +72,19 @@ function Dashboard() {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, desc }),
+      body: JSON.stringify({ 
+        name: deckName,
+        desc: deckDesc
+      }),
     });
 
     if (!res.ok) return;
 
     const data = await res.json();
     setDecks((prev) => [...prev, data.deck]);
+    setDeckName('');
+    setDeckDesc('');
+    setCreatingDeck(false);
   };
 
   return (
@@ -96,7 +106,7 @@ function Dashboard() {
         <Box className={styles.dashboardMainContent}>
             <div className={styles.topBar}>
               <span className={styles.mainTitle}>Flash Card Decks</span>
-              <Button variant="contained" onClick={handleCreateDeck}>
+              <Button variant="contained" onClick={() => setCreatingDeck(true)}>
                 Create Deck
               </Button>
             </div>
@@ -115,13 +125,25 @@ function Dashboard() {
                 <DeckCard key={deck.deckId} deck={deck} />
               ))}
 
-              <div className={styles.addDeckCard} onClick={handleCreateDeck} role="button" tabIndex={0}>
+              <div className={styles.addDeckCard} onClick={() => setCreatingDeck(true)} role="button" tabIndex={0}>
                 <div className={styles.addDeckIcon}>+</div>
                 <div className={styles.addDeckText}>Add Deck</div>
               </div>
             </div>
         </Box>
       </Box>
+
+      <Dialog open={creatingDeck} onClose={() => setCreatingDeck(false)} color='black' fullWidth>
+        <DialogTitle>Create Deck</DialogTitle>
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <TextField label="Deck Name" value={deckName} onChange={(e) => setDeckName(e.target.value)} />
+          <TextField label="Description" value={deckDesc} onChange={(e) => setDeckDesc(e.target.value)} multiline minRows={2} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setCreatingDeck(false)}>Cancel</Button>
+          <Button variant="contained" onClick={handleCreateDeck}>Save Deck</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
