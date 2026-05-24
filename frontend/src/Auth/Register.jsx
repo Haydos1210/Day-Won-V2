@@ -53,6 +53,24 @@ function Register({ authenticate }) {
                     password
                 }),
             });
+            const registerData = await registerRes.json();
+
+            if (!registerRes.ok) {
+                setError(registerData.error || 'Registration failed');
+                return;
+            }
+
+            const loginRes = await fetch('http://localhost:5500/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                }),
+            });
+
             const loginData = await loginRes.json();
 
             if (!loginRes.ok) {
