@@ -10,14 +10,14 @@ import TimerIcon from '@mui/icons-material/Timer';
 import Profile from './Profile';
 
 function Dashboard() {
-  const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const [decks, setDecks] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
+  
   useEffect(() => {
     const loadDecks = async () => {
+      const token = localStorage.getItem('token');
       if (!token) {
         navigate('/Login');
         return;
