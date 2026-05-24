@@ -139,21 +139,29 @@ function Dashboard() {
         </Box>
       </Box>
 
-      <Dialog open={creatingDeck} onClose={() => setCreatingDeck(false)} slotProps={{ paper: { sx: { backgroundColor: '#121212', color: 'white' } } }} fullWidth>
+      <Dialog open={creatingDeck} onClose={() => setCreatingDeck(false)} slotProps={{ paper: { sx: { backgroundColor: '#121212', color: 'white' } } }} 
+          sx={{
+            '& .MuiInputBase-root': { color: 'white' },
+            '& .MuiInputLabel-root': { color: 'white' },
+            '& .MuiOutlinedInput-notchedOutline': { borderColor: 'white' },
+            }} 
+          fullWidth>
         <DialogTitle sx={{ color: 'white', borderBottom: '1px solid #1a1a1a' }}>Create Deck</DialogTitle>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <TextField label="Deck Name" value={deckName} onChange={(e) => setDeckName(e.target.value)} InputLabelProps={{ style: { color: "white" } }}
-  sx={{
-    "& .MuiInputBase-input": {
-      color: "white",
-    },
-  }} />
+            sx={{
+              "& .MuiInputBase-input": {
+                color: "white",
+              },
+            }} 
+          />
           <TextField label="Description" value={deckDesc} onChange={(e) => setDeckDesc(e.target.value)} multiline minRows={2} InputLabelProps={{ style: { color: "white" } }}
-  sx={{
-    "& .MuiInputBase-input": {
-      color: "white",
-    },
-  }} />
+            sx={{
+              "& .MuiInputBase-input": {
+                color: "white",
+              },
+            }} 
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancel}>Cancel</Button>
