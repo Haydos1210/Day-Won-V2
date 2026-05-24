@@ -8,6 +8,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import TimerIcon from '@mui/icons-material/Timer';
 import Profile from './Profile';
+import axios from 'axios';
 
 function Dashboard() {
   const token = localStorage.getItem('token');
@@ -30,27 +31,20 @@ function Dashboard() {
       setError('');
 
       try {
-        const res = await fetch('http://localhost:5500/decks', {
+        const res = await axios.get('http://localhost:5500/decks', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        if (res.status === 401) {
+        setDecks(res.data.decks || []);
+      } catch (err) {
+        if (err.response?.status === 401) {
           localStorage.removeItem('token');
           navigate('/Login');
           return;
         }
-
-        if (!res.ok) {
-          setError('Error: failed to load decks!');
-          return;
-        }
-
-        const data = await res.json();
-        setDecks(data.decks || []);
-      } catch {
-        setError('Error: network error');
+        setError('Error: failed to load decks!');
       } finally {
         setLoading(false);
       }
@@ -65,26 +59,25 @@ function Dashboard() {
 
     // const name = prompt('Name:') || '';
     // const desc = prompt('Description:') || '';
-
-    const res = await fetch('http://localhost:5500/decks', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 
-        name: deckName,
-        desc: deckDesc
-      }),
-    });
-
-    if (!res.ok) return;
-
-    const data = await res.json();
-    setDecks((prev) => [...prev, data.deck]);
-    setDeckName('');
-    setDeckDesc('');
-    setCreatingDeck(false);
+    try {
+      const res = await axios.post('http://localhost:5500/decks', 
+        {
+          name: deckName,
+          desc: deckDesc
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+    );
+      setDecks((prev) => [...prev, res.data.deck]);
+      setDeckName('');
+      setDeckDesc('');
+      setCreatingDeck(false);
+    } catch (err) {
+      setError('Error: failed to create deck!');
+    }
   };
 
   const handleCancel = async () => {
