@@ -27,7 +27,7 @@ function App() {
         {/* <Route path='/presentation/:id' element={<EditPresentation token={token} />}/>
         <Route path='/presentation/:id/preview' element={<PreviewPresentation token={token} />}/> */}
         <Route path='/Login' element={<Login successCallback={authenticate} />}/>
-        <Route path='/Register' element={<Register successCallback={authenticate} />}/> 
+        <Route path='/Register' element={<Register authenticate={authenticate} />}/> 
         <Route path='/Profile' element={<Profile/>}/> 
         {/*
           <Route path='/Dashboard' element={<Dashboard token={token} logOut={logOut} onClickHome={() => navigate('/')}/>}/>
