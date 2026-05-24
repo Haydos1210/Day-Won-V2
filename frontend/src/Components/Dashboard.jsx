@@ -111,7 +111,7 @@ function Dashboard() {
             )}
 
             <div className={styles.deckGrid}>
-              {decks.map((deck) => (
+              {[...decks].slice().reverse().map((deck) => (
                 <DeckCard key={deck.deckId} deck={deck} />
               ))}
             </div>
