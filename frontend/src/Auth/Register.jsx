@@ -12,7 +12,8 @@ import {
 } from '@mui/material';
 
 function Register({ authenticate }) {
-    const [name, setName] = useState('');
+    const [nameFirst, setNameFirst] = useState('');
+    const [nameLast, setNameLast] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -22,7 +23,7 @@ function Register({ authenticate }) {
     const register = async (e) => {
         e.preventDefault();
 
-        if (!name || !email || !password || !confirmPassword) {
+        if (!nameFirst || !nameLast || !email || !password || !confirmPassword) {
             setError("Error: please fill all fields");
             return;
         }
@@ -39,8 +40,31 @@ function Register({ authenticate }) {
 
         try {
             setLoading(true);
+            setError('');
+            const registerRes = await fetch('http://localhost:5500/register', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nameFirst,
+                    nameLast,
+                    email,
+                    password
+                }),
+            });
+            const loginData = await loginRes.json();
+
+            if (!loginRes.ok) {
+                setError(loginData.error || 'Login failed');
+                return;
+            }
+
+            localStorage.setItem('token', loginData.token);
+
             if (authenticate) authenticate();
         } catch (err) {
+            console.error(err);
             setError('Error: registration failed.');
         } finally {
             setLoading(false);
@@ -59,10 +83,11 @@ function Register({ authenticate }) {
                     {error}
                 </Alert>
             )}
-            <TextField label="Name" fillWidth value={name} onChange={(e) => setName(e.target.value)} sx={{ input: { color: "white" }, label: { color: "white" } }} />
-            <TextField label="Email" type="email" fillWidth value={email} onChange={(e) => setEmail(e.target.value)} sx={{ input: { color: "white" }, label: { color: "white" } }} />
-            <TextField label="Password" type="password" fillWidth value={password} onChange={(e) => setPassword(e.target.value)} sx={{ input: { color: "white" }, label: { color: "white" } }} />
-            <TextField label="Confirm Password" type="password" fillWidth value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} sx={{ input: { color: "white" }, label: { color: "white" } }} />
+            <TextField label="First Name" fullWidth value={nameFirst} onChange={(e) => setNameFirst(e.target.value)} sx={{ input: { color: "white" }, label: { color: "white" } }} />
+            <TextField label="Last Name" fullWidth value={nameLast} onChange={(e) => setNameLast(e.target.value)} sx={{ input: { color: "white" }, label: { color: "white" } }} />
+            <TextField label="Email" type="email" fullWidth value={email} onChange={(e) => setEmail(e.target.value)} sx={{ input: { color: "white" }, label: { color: "white" } }} />
+            <TextField label="Password" type="password" fullWidth value={password} onChange={(e) => setPassword(e.target.value)} sx={{ input: { color: "white" }, label: { color: "white" } }} />
+            <TextField label="Confirm Password" type="password" fullWidth value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} sx={{ input: { color: "white" }, label: { color: "white" } }} />
             
             <div className={styles.actions}>
                 <Button type='submit' variant="contained" disabled={loading} fullWidth>
