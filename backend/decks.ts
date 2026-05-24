@@ -94,10 +94,13 @@ router.delete('/decks/:deckId', authed( async (req: Request, res: Response) => {
 
     const data = getData();
     const deckIndex = data.decks.findIndex(currDeck => currDeck.deckId === deckId);
+    if (deckIndex === -1) {
+        return res.status(404).json({ error: 'Deck not found!' });
+    }
     const deck = data.decks[deckIndex];
-    if (deckIndex === -1) return res.status(404).json({ error: 'Deck not found!' });
+    if (!deck) return res.status(404).json({ error: 'Deck not found!' });
     if (!isDeckOwner(req, res, deck)) return;
-
+    
     const removedDeck = data.decks[deckIndex];
     data.decks.splice(deckIndex, 1); // mutate decks array by removing inplace the deck at index 'deck'
 

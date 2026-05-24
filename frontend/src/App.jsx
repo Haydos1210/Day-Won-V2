@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Landing />}/>
         <Route path='/Login' element={<Login successCallback={authenticate} />}/>
-        <Route path='/Register' element={<Register successCallback={authenticate} />}/> 
+        <Route path='/Register' element={<Register authenticate={authenticate} />}/> 
         <Route path='/Dashboard' element={<Dashboard />}/>
         <Route path='/Profile' element={<Profile/>}/> 
         <Route path='/decks/:deckId' element={<Deck />} />
