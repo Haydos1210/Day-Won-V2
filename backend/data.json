@@ -1,5 +1,29 @@
 {
-  "users": [],
-  "decks": [],
-  "sessions": {}
+  "users": [
+    {
+      "userId": 1,
+      "nameFirst": "hayden",
+      "nameLast": "fu",
+      "email": "haydos1210@gmail.com",
+      "password": "q",
+      "numSuccessfulLogins": 0,
+      "numFailedPasswordsSinceLastLogin": 0,
+      "passwordHistory": []
+    }
+  ],
+  "decks": [
+    {
+      "ownerId": 1,
+      "deckId": 1,
+      "name": "new",
+      "desc": "blahj",
+      "cards": []
+    }
+  ],
+  "sessions": {
+    "04c7ff72-92c8-4345-991d-693eaf53df2d": {
+      "nameFirst": "hayden",
+      "userId": 1
+    }
+  }
 }
