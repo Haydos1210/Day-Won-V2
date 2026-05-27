@@ -117,4 +117,22 @@ router.post('/logout', authed(async (req: Request, res: Response) => {
     return res.status(200).json({ message: 'Logged out' });
 }));
 
+/**
+ * Gets the list of users in the database. Excludes user's password and password history.
+*/
+router.get('/users', authed(async (req: Request, res: Response) => {
+    const data = getData();
+    
+    const users = data.users.map((u) => ({
+        userId: u.userId,
+        nameFirst: u.nameFirst,
+        nameLast: u.nameLast,
+        email: u.email,
+        numSuccessfulLogins: u.numSuccessfulLogins,
+        numFailedPasswordsSinceLastLogin: u.numFailedPasswordsSinceLastLogin,
+    }));
+    
+    return res.status(200).json({ users });
+}));
+
 export default router;
